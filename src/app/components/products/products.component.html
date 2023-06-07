@@ -1,7 +1,8 @@
 <button (click)="createNewProduct()">Create</button>
+<button (click)="onShowDetail('12212121')">Detalle not found</button>
 <div class="products--grid">
-  <app-product 
-    [product]="product" 
+  <app-product
+    [product]="product"
     *ngFor="let product of products"
     (addedProduct)="onAddToShoppingCart($event)"
     (showProduct)="onShowDetail($event)"
@@ -9,6 +10,7 @@
 </div>
 <button (click)="loadMore()">Cargar mas</button>
 <div class="product-detail" [class.active]="showProductDetail">
+  {{ statusDetail }}
   <div *ngIf="productChosen">
     <button (click)="toggleProductDetail()">Close</button>
     <h1>{{ productChosen.title }}</h1>
