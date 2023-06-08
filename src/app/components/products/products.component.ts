@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  CreateProductDTO,
-  Product,
-  UpdateProductDTO,
-} from '../../models/product.model';
+import { switchMap } from 'rxjs/operators'
+import { pipe, zip } from 'rxjs'
+import { CreateProductDTO, Product, UpdateProductDTO } from '../../models/product.model';
 import { StoreService } from '../../services/store.service';
 import { ProductsService } from '../../services/products.service';
 import { da } from 'date-fns/locale';
@@ -27,6 +25,7 @@ export class ProductsComponent implements OnInit {
     category: {
       id: '',
       name: '',
+      image: '',
     },
     description: '',
   };
@@ -75,13 +74,28 @@ export class ProductsComponent implements OnInit {
     );
   }
 
+  readAndUpdate(id: string) {
+    this.productsService.getProduct(id)
+    .pipe(
+      switchMap((product) => this.productsService.update(product.id, { title: 'changes' }))
+    )
+    .subscribe((data) => {
+      console.log(data);
+    });
+    this.productsService.fetchReadAndUpdate(id, { title: 'changes' })
+    .subscribe(response => {
+    const read = response[0];
+    const update = response[1];
+  })
+  }
+
   createNewProduct() {
     const product: CreateProductDTO = {
       title: 'Nuevo producto',
       price: 1000,
       categoryId: 1,
       description: 'Esta es una descripcion diferente',
-      images: ['https://placeimg.com/640/480/any'],
+      images: [`https://api.escuelajs.co/api/v1/products/${Math.random()}`],
     };
 
     this.productsService.create(product).subscribe((data) => {

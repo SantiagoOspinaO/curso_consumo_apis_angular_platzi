@@ -1,0 +1,11 @@
+{
+    "files.insertFinalNewline": false,
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "[dockercompose]": {
+        "editor.autoIndent": "full"
+    },
+    "[yaml]": {
+        "editor.autoIndent": "full"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+}

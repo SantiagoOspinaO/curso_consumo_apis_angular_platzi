@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
-import { retry, catchError } from 'rxjs/operators'
-import { throwError } from 'rxjs'
+import { retry, catchError, map } from 'rxjs/operators'
+import { throwError, zip } from 'rxjs'
 
 import { CreateProductDTO, Product, UpdateProductDTO } from './../models/product.model';
 import { environment } from './../../environments/environment'
@@ -11,7 +11,8 @@ import { environment } from './../../environments/environment'
 })
 export class ProductsService {
 
-  private url = `${environment.API_URL}/api/products`
+  //private url = `${environment.API_URL}/api/v1/products`
+  private url = 'https://api.escuelajs.co/api/v1/products'
 
   constructor(
     private http: HttpClient
@@ -23,9 +24,22 @@ export class ProductsService {
       params = params.set('limit', limit);
       params = params.set('offset', offset);
     }
-    return this.http.get<Product[]>(this.url, { params })
+    return this.http.get<Product[]>(this.url)
     .pipe(
-      retry(3) //reintentos para hacer el consumo del get
+      retry(3), //reintentos para hacer el consumo del get
+      map(products => products.map( item => {
+        return {
+          ...item,
+          taxes: .19 * item.price
+        }
+      }))
+    );
+  }
+
+  fetchReadAndUpdate(id: string, dto: UpdateProductDTO) {
+    return zip(
+      this.getProduct(id),
+      this.update(id, dto)
     );
   }
 
@@ -50,7 +64,16 @@ export class ProductsService {
   getProductsByPage(limit: number, offset: number) {    // Se unifica con el metodo de getAllProducts
     return this.http.get<Product[]>(`${this.url}`, {
       params: { limit, offset }
-    });
+    })
+    .pipe(
+      retry(3), //reintentos para hacer el consumo del get
+      map(products => products.map( item => {
+        return {
+          ...item,
+          taxes: .19 * item.price
+        }
+      }))
+    );
   }
 
   create(dto: CreateProductDTO) {

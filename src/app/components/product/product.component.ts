@@ -17,6 +17,7 @@ export class ProductComponent {
     category: {
       id:'',
       name:'',
+      image:''
     },
     description: ''
   };
