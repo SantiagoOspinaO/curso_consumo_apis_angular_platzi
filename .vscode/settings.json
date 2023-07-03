@@ -1,11 +1,18 @@
 {
-    "files.insertFinalNewline": false,
-    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
-    "[dockercompose]": {
-        "editor.autoIndent": "full"
-    },
-    "[yaml]": {
-        "editor.autoIndent": "full"
-    },
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "files.insertFinalNewline": false,
+  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "[dockercompose]": {
+    "editor.autoIndent": "full"
+  },
+  "[yaml]": {
+    "editor.autoIndent": "full"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+"editor.linkedEditing": true,
+"[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+},
+"[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+}
 }
