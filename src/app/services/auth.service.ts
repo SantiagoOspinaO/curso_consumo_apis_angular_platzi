@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Auth } from '../models/auth.model';
+import { User } from '../models/user.model';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
 
@@ -15,7 +16,15 @@ export class AuthService {
         return this.http.post<Auth>(`${this.url}/login`, { email, password });
     }
 
-    profile() {
-        return this.http.get(`${this.url}/profile`);
+    profile(token: string) {
+        // const headers = new HttpHeaders(); 
+        // headers.set('Authorization', `Bearer ${token}`);
+
+        return this.http.get<User>(`${this.url}/profile`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                // 'Content-Type': 'application/json'
+            }
+        });
     }
 }
