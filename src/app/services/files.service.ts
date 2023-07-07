@@ -3,11 +3,18 @@ import { Injectable } from '@angular/core';
 import { saveAs } from 'file-saver';
 import { map, tap } from 'rxjs';
 
+interface File {
+    originalname: string,
+    filename: string,
+    location: string
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class FilesService {
+
+    private url = "https://api.escuelajs.co/api/v1/files";
 
     constructor(private http: HttpClient) { }
 
@@ -20,6 +27,16 @@ export class FilesService {
                 }),
                 map(() => true)
             );
+    }
+
+    uploadFile(file: Blob) {
+        const dto = new FormData();
+        dto.append('file', file);
+        return this.http.post<File>(`${this.url}/upload`, dto, {
+            // headers: {
+            //     'Content-Type': 'multipart/form-data'
+            // } Opcional, de acuerdo al backend
+        });
     }
 }
 
