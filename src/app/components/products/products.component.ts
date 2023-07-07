@@ -63,11 +63,11 @@ export class ProductsComponent implements OnInit {
             },
             (errorMsg) => {
                 this.statusDetail = 'error';
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: errorMsg,
-                });
+                // Swal.fire({
+                //     icon: 'error',
+                //     title: 'Oops...',
+                //     text: errorMsg,
+                // });
             }
         );
     }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
+import { FilesService } from './services/files.service';
 
 
 @Component({
@@ -14,8 +15,10 @@ export class AppComponent {
     showImg = true;
     token = '';
 
-    constructor(private authService: AuthService, private userService: UsersService) {
-
+    constructor(
+        private authService: AuthService,
+        private userService: UsersService,
+        private filesService: FilesService) {
     }
 
     onLoaded(img: string) {
@@ -60,5 +63,10 @@ export class AppComponent {
         .subscribe(rta => {
             console.log(rta);
         });
+    }
+
+    downloadPdf() {
+        this.filesService.getFile('my.pdf', 'https://young-sands-07814.herokuapp.com/api/files/dummy.pdf', 'application/pdf')
+        .subscribe()
     }
 }

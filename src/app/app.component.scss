@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    margin-top: 5px;
+    /* Establece un contenedor flexible */
+    p {
+        a {
+            font-size: small;
+            bottom: 0; 
+            margin-left: 10px;
+            color: rgb(0, 0, 0);     
+        }
+    }
+}
+
+.container p {
+    margin-right: 10px;
+    /* Agrega un margen a la derecha para separar los párrafos */
+}
